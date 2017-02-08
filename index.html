@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<title>Asset Management</title>
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular-route.min.js"></script>
+		<script type="text/javascript" src="controller.js"></script>
+		<style type="text/css">
+			body {
+				max-width: 1000px;
+				margin: auto;
+			}
+			.mb20 {
+				margin-bottom: 20px;
+			}
+			.all-user-list {
+				width: 250px;
+				text-align: left;
+				display: inline-block;
+			}
+			.single-user-detail, .edit-asset-form {
+				display: inline-block;
+				width: 700px;
+				margin-left: 45px;
+				vertical-align: top;
+			}
+			.edit-asset-form h3 {
+				margin-top: 0;
+			}
+			.edit-asset-form form {
+				margin: 0;
+			}
+			.single-user-detail a {
+
+			}
+			.all-user-list td, .all-user-list th {
+				text-align: left;
+				padding-left: 10px;
+			}
+			.text-center {
+				text-align: center;
+			}
+			a {
+				color: blue;
+				cursor: pointer;
+			}
+			form {
+				max-width: 300px;
+				margin: auto;
+				padding: 50px;
+				background: #4CAF50;
+			}
+			.form-group {
+				margin-bottom: 10px;
+			}
+			input {
+				width: 100%;
+				padding: 5px 10px;
+			}
+			input[type="submit"] {
+				width: 75px;
+				margin: auto;
+				display: block;
+			}
+			form span {
+				color: red;
+			}
+			ul {
+				list-style-type: none;
+				padding: 0;
+			}
+			ul li {
+				display: inline-block;
+			}
+			ul li a {
+				padding: 5px 10px;
+				display: inline-block;
+			}
+			ul li a.active {
+				background: green;
+				color: white;
+			}
+			.user-profile input[type="submit"] {
+				width: 150px;
+			}
+			table {
+				width: 100%;
+			}
+			table, td, th {
+				border: 1px solid #ccc;
+				padding: 0;
+			}
+			td, th {
+				text-align: center;
+				padding: 5px 0;
+			}
+		</style>
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body ng-app="myApp">
+		<div ng-view></div>
+	</body>
+</html>
+
+

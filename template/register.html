@@ -1,0 +1,53 @@
+<div ng-controller="registerCtrl">
+	<form name="registerForm" ng-submit="register()" novalidate>
+		<div class="form-group">
+			<label for=""> First name</label>
+			<input type="text" name="fname" ng-model="registerDetail.firstName" required/>
+			<span ng-show="registerForm.fname.$error.required && registerForm.fname.$dirty">First name required</span>
+		</div>
+
+		<div class="form-group">
+			<label for=""> Last name</label>
+			<input type="text" name="lname" ng-model="registerDetail.lastName" required/>
+			<span ng-show="registerForm.lname.$error.required && registerForm.lname.$dirty">Last name required</span>
+		</div>
+
+		<div class="form-group">
+			<label for=""> Username</label>
+			<input type="text" name="username" ng-model="registerDetail.userName" required/>
+			<span ng-show="registerForm.username.$error.required && registerForm.username.$dirty">Username required</span>
+			<span ng-show="alreadyUnameError == true">Username already registered</span>
+		</div>
+
+		<div class="form-group">
+			<label for=""> Email</label>
+			<input type="text" name="email" ng-model="registerDetail.email" ng-pattern="/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))$/" required/>
+			<span ng-show="registerForm.email.$error.pattern">Invalid Email</span>
+			<span ng-show="registerForm.email.$error.required && registerForm.email.$dirty">Username required</span>
+			<span ng-show="alreadyEmailError == true">Email already registered</span>
+		</div>
+
+		<div class="form-group">
+			<label for=""> Password</label>
+			<input type="password" ng-copy="$event.preventDefault()" name="password" ng-model="registerDetail.password" ng-pattern="/^[a-zA-Z]\w{3,14}$/" required/>
+			<span ng-show="registerForm.password.$error.required && registerForm.password.$dirty">Password required</span>
+			<span ng-show="registerForm.password.$error.pattern">Invalid Password</span>
+		</div>
+
+		<div class="form-group">
+			<label for=""> Confirm password</label>
+			<input type="password" ng-paste="$event.preventDefault()" name="cpassword" ng-model="cPassword" ng-pattern="/^[a-zA-Z]\w{3,14}$/" required/>
+			<span ng-show="registerForm.cpassword.$error.required && registerForm.cpassword.$dirty">Password required</span>
+			<span ng-show="registerForm.cpassword.$error.pattern">Invalid Password</span>
+			<span ng-show="registerDetail.password != cPassword && registerForm.cpassword.$dirty && !registerForm.cpassword.$error.pattern">Paswword does not match</span>
+		</div>
+
+		<div class="form-group">
+			<input type="submit" value="Register" ng-disabled="registerForm.username.$invalid || registerForm.password.$invalid || registerForm.email.$invalid || registerForm.fname.$invalid || registerForm.lname.$invalid ||registerForm.cpassword.$invalid">
+		</div>
+
+		<div class="form-group text-center">
+			<a ng-click="logHere()">Back to login</a>
+		</div>
+	</form>
+</div>

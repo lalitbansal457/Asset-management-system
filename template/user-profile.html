@@ -1,0 +1,231 @@
+<div controller="profileCtrl" class="user-profile" >
+	<div ng-if="userShow == true">
+		<ul>
+			<li><a class="active" ng-class="{active : isSet(1)}" ng-click="toggleActive(1)">Dashboard</a></li>
+			<li><a ng-class="{active : isSet(2)}" ng-click="toggleActive(2)">Your Assets</a></li>
+			<li><a ng-class="{active : isSe(3)}" ng-click="toggleActive(3)">Add New Assets</a></li>
+			<li><a ng-click="logout()">Logout</a></li>
+			<li><a ng-click="clearStorage()">Clear Storage</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab" ng-show="isSet(1)">
+				<h3>Dashboard</h3>
+				<div class="form-group">
+					<span>Name : </span> <span>{{registerDetail[userIndex].firstName}}</span>
+				</div>
+				<div class="form-group">
+					<span>Username : </span> <span>{{registerDetail[userIndex].userName}}</span>
+				</div>
+				<div class="form-group">
+					<span>Email : </span> <span>{{registerDetail[userIndex].email}}</span>
+				</div>
+			</div>
+			<div class="tab" ng-show="isSet(2)" ng-controller="yourAssetCtrl">
+				<h3>Your Assets</h3>
+				<table border-collapse="collapse" cellpadding="0" cellspacing="0">
+					<tr>
+						<td>Type</td>
+						<td>Device name</td>
+						<td>Company Name</td>
+						<td>Quantity</td>
+					</tr>
+					<tr ng-repeat="assetDetail in yourAssetDetail[userIndex].assetData" ng-if="$index>0">
+						<td>{{assetDetail.assetType}}</td>
+						<td>{{assetDetail.dName}}</td>
+						<td>{{assetDetail.cName}}</td>
+						<td>{{assetDetail.quantity}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="tab" ng-show="isSet(3)" ng-controller="addNewAssetCtrl">
+				<h3>Add New Assets</h3>
+				<form name="addAsset" ng-submit="addNewAsset()" novalidate>	
+					<div class="form-group">
+						<label>Type</label>
+						<input type="text" name="type" ng-model="addNewAssetDetail.assetType"  required/>
+						<span ng-show="addAsset.type.$error.required && addAsset.dname.$dirty">Type is required</span>
+					</div>
+					<div class="form-group">
+						<label>Device name</label>
+						<input type="text" name="dname" ng-model="addNewAssetDetail.dName" ng-change="change()" required/>
+						<span ng-show="addAsset.dname.$error.required && addAsset.dname.$dirty">Device name is required</span>
+						<span ng-show="alreadDeviceError == true">You already have this device.</span>
+					</div>
+					<div class="form-group">
+						<label>Company name</label>
+						<input type="text" name="cname" ng-model="addNewAssetDetail.cName" required/>
+						<span ng-show="addAsset.cname.$error.required && addAsset.cname.$dirty">Company name is required</span>
+					</div>
+					<div class="form-group">
+						<label>Quantity</label>
+						<input type="number" min="0" max="9" name="quantity" ng-model="addNewAssetDetail.quantity" required/>
+						<span ng-show="addAsset.quantity.$error.required && addAsset.quantity.$dirty">Quantity is required</span>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Add new asset" ng-disabled="addAsset.type.$invalid || addAsset.dname.$invalid || addAsset.cname.$invalid || addAsset.quantity.$invalid" >
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div ng-if="adminShow == true">
+		<ul>
+			<li><a class="active" ng-class="{active : isSet(1)}" ng-click="toggleActive(1)">Dashboard</a></li>
+			<!-- <li><a ng-class="{active : isSet(2)}" ng-click="toggleActive(2)">All Assets</a></li>
+			<li><a ng-class="{active : isSet(3)}" ng-click="toggleActive(3)">Add New Assets</a></li> -->
+			<li><a ng-class="{active : isSet(4)}" ng-click="toggleActive(4)">All users</a></li>
+			<li><a ng-click="logout()">Logout</a></li>
+			<li><a ng-click="clearStorage()">Clear Storage</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab" ng-show="isSet(1)">
+				<h3>Dashboard</h3>
+				<div class="form-group">
+					<span>Name : </span> <span>{{registerDetail[0].firstName}}</span>
+				</div>
+				<div class="form-group">
+					<span>Username : </span> <span>{{registerDetail[0].userName}}</span>
+				</div>
+				<div class="form-group">
+					<span>Email : </span> <span>{{registerDetail[0].email}}</span>
+				</div>
+			</div>
+			<!-- <div class="tab" ng-show="isSet(2)" ng-controller="allAssetCtrl">
+				<h3>All Assets</h3>
+				<table border-collapse="collapse" cellpadding="0" cellspacing="0">
+					<tr>
+						<td>Type</td>
+						<td>Device name</td>
+						<td>Company Name</td>
+						<td>Quantity</td>
+					</tr>
+					<tr ng-repeat="assetDetail in allAssetDetail.assetData" ng-if="$index>0">
+						<td>{{assetDetail.assetType}}</td>
+						<td>{{assetDetail.dName}}</td>
+						<td>{{assetDetail.cName}}</td>
+						<td>{{assetDetail.quantity}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="tab" ng-show="isSet(3)" ng-controller="addNewAssetCtrl">
+				<h3>Add New Assets</h3>
+				<form name="addAsset" ng-submit="addNewAsset()" novalidate>	
+					<div class="form-group">
+						<label>Type</label>
+						<input type="text" name="type" ng-model="addNewAssetDetail.assetType" required/>
+						<span ng-show="addAsset.type.$error.required && addAsset.dname.$dirty">Type is required</span>
+					</div>
+					<div class="form-group">
+						<label>Device name</label>
+						<input type="text" name="dname" ng-model="addNewAssetDetail.dName" required/>
+						<span ng-show="addAsset.dname.$error.required && addAsset.dname.$dirty">Device name is required</span>
+					</div>
+					<div class="form-group">
+						<label>Company name</label>
+						<input type="text" name="cname" ng-model="addNewAssetDetail.cName" required/>
+						<span ng-show="addAsset.cname.$error.required && addAsset.cname.$dirty">Company name is required</span>
+					</div>
+					<div class="form-group">
+						<label>Quantity</label>
+						<input type="number" min="0" max="9" name="quantity" ng-model="addNewAssetDetail.quantity" required/>
+						<span ng-show="addAsset.quantity.$error.required && addAsset.quantity.$dirty">Quantity is required</span>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Add new asset" ng-disabled="addAsset.type.$invalid || addAsset.dname.$invalid || addAsset.cname.$invalid || addAsset.quantity.$invalid" >
+					</div>
+				</form>
+			</div> -->
+			<div class="tab" ng-show="isSet(4)" ng-controller="userListCtrl">
+				<div class="all-user-list">
+					<table width="300" cellpadding="0". cellspacing="0" >
+						<tr>
+							<th>S.No.</th>
+							<th>User Name</th>
+						</tr>
+						<tr ng-repeat="user in userList" ng-if="$index>0">
+							<td>{{$index}}</td>
+							<td><a ng-click="showAsset($index)">{{user}}</a></td>
+						</tr>
+					</table>	
+				</div>
+				<div class="single-user-detail">
+					<a ng-click="addAssetShow()">Add new asset </a>
+					<div ng-show="addAssetShowVar == true">
+						<h3>Add New Assets</h3>
+						<form name="addAsset" ng-submit="addOneAsset()" novalidate>	
+							<div class="form-group">
+								<label>Type</label>
+								<input type="text" name="type" ng-model="addOneAssetDetail.assetType"  required/>
+								<span ng-show="addAsset.type.$error.required && addAsset.dname.$dirty">Type is required</span>
+							</div>
+							<div class="form-group">
+								<label>Device name</label>
+								<input type="text" name="dname" ng-model="addOneAssetDetail.dName" ng-change="change()" required/>
+								<span ng-show="addAsset.dname.$error.required && addAsset.dname.$dirty">Device name is required</span>
+								<span ng-show="alreadDeviceError == true">You already have this device.</span>
+							</div>
+							<div class="form-group">
+								<label>Company name</label>
+								<input type="text" name="cname" ng-model="addOneAssetDetail.cName" required/>
+								<span ng-show="addAsset.cname.$error.required && addAsset.cname.$dirty">Company name is required</span>
+							</div>
+							<div class="form-group">
+								<label>Quantity</label>
+								<input type="number" min="0" max="9" name="quantity" ng-model="addOneAssetDetail.quantity" required/>
+								<span ng-show="addAsset.quantity.$error.required && addAsset.quantity.$dirty">Quantity is required</span>
+							</div>
+							<div class="form-group">
+								<input type="submit" value="Add new asset" ng-disabled="addAsset.type.$invalid || addAsset.dname.$invalid || addAsset.cname.$invalid || addAsset.quantity.$invalid" >
+							</div>
+						</form>
+					</div>
+					<table border-collapse="collapse" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>Type</td>
+							<td>Device Name</td>
+							<td>Company Name</td>
+							<td>Quantity</td>
+							<td>Action</td>
+						</tr>
+						<tr ng-repeat="assetDetail in registerDetail[currentIndex].assetData track by $index" ng-if="$index>0">
+							<td>{{assetDetail.assetType}}</td>
+							<td>{{assetDetail.dName}}</td>
+							<td>{{assetDetail.cName}}</td>
+							<td>{{assetDetail.quantity}}</td>
+							<td><a ng-click="editAsset(assetDetail, $index)">Edit</a> | <a ng-click="deleteAsset($index)">Delete</a></td>
+						</tr>
+					</table>
+				</div>
+				<div ng-if="editShow == true" class="edit-asset-form">
+					<h3>Edit Assets</h3>
+					<form name="editAsset" ng-submit="editAssetSubmit()" novalidate>	
+						<div class="form-group">
+							<label>Type</label>
+							<input type="text" name="type" value="{{editDetail.assetType}}" ng-model="editDetail.assetType" required/>
+							<span ng-show="editAsset.type.$error.required && editAsset.type.$dirty">Type is required</span>
+						</div>
+						<div class="form-group">
+							<label>Device name</label>
+							<input type="text" name="dname" value="{{editDetail.dName}}" ng-model="editDetail.dName" required/>
+							<span ng-show="editAsset.dname.$error.required && editAsset.dname.$dirty">Device name is required</span>
+						</div>
+						<div class="form-group">
+							<label>Company name</label>
+							<input type="text" name="cname" value="{{editDetail.cName}}" ng-model="editDetail.cName" required/>
+							<span ng-show="editAsset.cname.$error.required && editAsset.cname.$dirty">Company name is required</span>
+						</div>
+						<div class="form-group">
+							<label>Quantity</label>
+							<input type="number" min="0" max="9" name="quantity" value="{{editDetail.quantity}}" ng-model="editDetail.quantity" required/>
+							<span ng-show="editAsset.quantity.$error.required && editAsset.quantity.$dirty">Quantity is required</span>
+						</div>
+						<div class="form-group">
+							<input type="submit" value="Edit asset" ng-disabled="editAsset.type.$invalid || editAsset.dname.$invalid || editAsset.cname.$invalid || editAsset.quantity.$invalid" >
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

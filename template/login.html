@@ -1,0 +1,21 @@
+<div ng-controller="loginCtrl">
+	<form name="loginForm" ng-submit="login()" novalidate>
+		<div class="form-group">
+			<label for=""> Username</label>
+			<input type="text" name="username" ng-model="userName" required/>
+			<span ng-show="loginForm.username.$error.required && loginForm.username.$dirty">Username required</span>
+		</div>
+		<div class="form-group">
+			<label for=""> Password</label>
+			<input type="password" name="password" ng-model="password" ng-pattern="/^[a-zA-Z]\w{3,14}$/" required/>
+			<span ng-show="loginForm.password.$error.required && loginForm.password.$dirty">Password required</span>
+			<span ng-show="loginForm.password.$error.pattern">Invalid Password</span>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Login" ng-disabled="loginForm.username.$invalid || loginForm.password.$invalid">
+		</div>
+		<div class="form-group text-center">
+			<a ng-click="regisHere()">Register here</a>
+		</div>
+	</form>
+</div>
