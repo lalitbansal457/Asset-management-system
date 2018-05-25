@@ -22,8 +22,10 @@ app.controller('loginCtrl', function($scope, $location){
 	$scope.login = function(){
 		$scope.adminDetail = [{'userName' : $scope.userName, 'password': $scope.password}];
 		$scope.registerDetail = JSON.parse(localStorage.getItem('registerData'));
+		
 		if ($scope.registerDetail != null) {
 			for(i=1; i<=$scope.registerDetail.length-1; i++){
+				
 				if($scope.userName == $scope.registerDetail[i].userName && $scope.password == $scope.registerDetail[i].password ) {
 					sessionStorage.setItem('currentSession', JSON.stringify($scope.registerDetail[i].userName));
 					$scope.currentSession = JSON.parse(sessionStorage.getItem('currentSession'));
@@ -33,6 +35,7 @@ app.controller('loginCtrl', function($scope, $location){
 						$location.path('/user-profile');
 					}
 					 break;
+					
 				} else if($scope.userName == 'admin' && $scope.password == 'admin123') {
 					sessionStorage.setItem('adminSession', JSON.stringify([$scope.userName, $scope.password]));
 					$scope.adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
@@ -72,6 +75,7 @@ app.controller('registerCtrl', function($scope, $location) {
 	}
 
 	$scope.register = function(){
+		
 		if ($scope.userNameList.indexOf($scope.registerDetail.userName) == -1) {
 			$scope.registerDetail.push({'firstName': $scope.registerDetail.firstName , 'lastName': $scope.registerDetail.lastName, 'userName': $scope.registerDetail.userName, 'email': $scope.registerDetail.email, 'password': $scope.registerDetail.password, 'assetData':[{'assetType': '', 'dName': '', 'cName': '', 'quantity': ''} ]});
 			localStorage.setItem('registerData', JSON.stringify($scope.registerDetail));
@@ -80,6 +84,7 @@ app.controller('registerCtrl', function($scope, $location) {
 			$scope.alreadyUnameError = true;
 			$location.path('/register');
 		}
+		
 	}
 	$scope.logHere = function(){
 		$location.path('/');
@@ -106,14 +111,17 @@ app.controller('profileCtrl', function($scope, $location){
 	$scope.toggleActive = function(e) {
 		$scope.show = e;
 	}
+	
 	$scope.isSet = function(tabId){
 		return $scope.show === tabId;
 	}
+	
 	$scope.logout = function(){
 		sessionStorage.removeItem('currentSession');
 		sessionStorage.removeItem('adminSession');
 		$location.path('/');
 	}
+	
 	$scope.clearStorage = function(){
 		localStorage.clear();
 	}
@@ -195,12 +203,8 @@ app.controller('userListCtrl', function($scope, $location){
 
 	$scope.deleteAsset = function(index){
 		$scope.deleteIndex = index;
-		console.log($scope.currentIndex);
-		console.log($scope.deleteIndex);
-		console.log($scope.registerDetail[$scope.currentIndex].assetData);
 		$scope.registerDetail[$scope.currentIndex].assetData.splice($scope.deleteIndex, 1);
 		localStorage.setItem('registerData', JSON.stringify($scope.registerDetail));
-		console.log($scope.registerDetail[$scope.currentIndex].assetData[$scope.deleteIndex]);
 	}
 
 
